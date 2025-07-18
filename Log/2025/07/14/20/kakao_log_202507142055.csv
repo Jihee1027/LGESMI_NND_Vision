@@ -1,0 +1,3 @@
+﻿Time,Chatroom (Input),Chatroom (Output),Message (Input),Message (Output),Status,Reason for FAIL
+2025-07-14 20:55:00,김지희 (Jihee Kim),김지희 (Jihee Kim),"MI2 NND(A) #02 INTEGRATION LOT_ID: 8EGB35NA02 has NG Rate of 7.33% at 2025-07-11 08:01:21. Total defect count is 47. Surface defect count: 36, Dimension defect count: 15. Please Check!!","MI2 NND(A) #02 INTEGRATION LOT_ID: 8EGB35NA02 has NG Rate of 7.33% at 2025-07-11 08:01:21. Total defect count is 47. Surface defect count: 36, Dimension defect count: 15. Please Check!!",SUCCESS,
+2025-07-14 20:55:05,NND alert test 1,NND alert test 1,"Hello, test message","Hello, test message",SUCCESS,

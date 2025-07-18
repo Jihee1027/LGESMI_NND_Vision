@@ -1,0 +1,7 @@
+﻿Time,Chatroom (Input),Chatroom (Output),Message (Input),Message (Output),Status,Reason for FAIL
+2025-07-14 20:50:10,test 7,test 7,Send one message,Send one message,SUCCESS,
+2025-07-14 20:50:14,김지희 (Jihee Kim),김지희 (Jihee Kim),"Hello, test message","Hello, test message",SUCCESS,
+2025-07-14 20:50:18,NND alert test 1,NND alert test 1,"Hello, test message","Hello, test message",SUCCESS,
+2025-07-14 20:50:24,test 7,test 7,Send one message,Send one message,SUCCESS,
+2025-07-14 20:50:28,김지희 (Jihee Kim),김지희 (Jihee Kim),"Hello, test message","Hello, test message",SUCCESS,
+2025-07-14 20:50:32,NND alert test 1,NND alert test 1,"Hello, test message","Hello, test message",SUCCESS,

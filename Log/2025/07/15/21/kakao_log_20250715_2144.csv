@@ -1,0 +1,4 @@
+﻿Time,Chatroom(Desired),Chatroom(Opened),Message Input,Unique Code(Searched),Chatroom(Found),Status,Reason(FAIL)
+2025-07-15 21:44:38,test 4,test 4,"MI2 NND(A) #03 INTEGRATION LOT_ID: 60190aa49e has NG Rate of 14.24% at 2025-07-15 21:44:29. Total defect count is 134. Surface defect count: 77, Dimension defect count: 57. Please Check!!",a1054622,Integrated Search,FAIL,Message Sent to Wrong Chatroom
+2025-07-15 21:44:47,김지희 (Jihee Kim),김지희 (Jihee Kim),"MI2 NND(C) #01 INTEGRATION LOT_ID: d79695c88c has NG Rate of 14.31% at 2025-07-15 21:44:39. Total defect count is 108. Surface defect count: 8, Dimension defect count: 100. Please Check!!",c40e17af,김지희 (Jihee Kim),SUCCESS,
+2025-07-15 21:44:57,NND alert test 1,NND alert test 1,"MI2 NND(A) #02 INTEGRATION LOT_ID: e6fbe18784 has NG Rate of 2.23% at 2025-07-15 21:44:49. Total defect count is 150. Surface defect count: 87, Dimension defect count: 63. Please Check!!",d2614506,NND alert test 1,SUCCESS,

@@ -7,6 +7,7 @@ import pyperclip
 import csv
 import os
 from datetime import datetime
+import uuid
 
 class KakaoChatConfig:
     def __init__(self):
@@ -27,14 +28,14 @@ class KakaoChatService:
             actual_title = win32gui.GetWindowText(hwndMain)
 
             if chatroom_name not in actual_title:
-                self.log_case(chatroom_name, actual_title, text, code, searchedroom_name, "opened_wrong_chatroom", "") 
+                self.log_case(chatroom_name, actual_title, text, code, searchedroom_name, "opened_wrong_chatroom") 
                 win32gui.PostMessage(hwndMain, win32con.WM_CLOSE, 0, 0)
 
             else:
                 try:
                     # Send the message
-                    code = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                    pyperclip.copy(f"{code}" + "\n\n" + text)
+                    code = uuid.uuid4().hex[:8]
+                    pyperclip.copy(f"chat code: {code}" + "\n\n" + text)
                     pyautogui.hotkey('ctrl', 'v')
                     time.sleep(0.5)
                     
@@ -46,18 +47,18 @@ class KakaoChatService:
             
                     # Check if the message actually sent
                     if searchedroom_name == chatroom_name:
-                        self.log_case(chatroom_name, actual_title, text, code, searchedroom_name, "message_sent_desired_chatroom", "")
+                        self.log_case(chatroom_name, actual_title, text, code, searchedroom_name, "message_sent_desired_chatroom")
                         
                     else:
                         if searchedroom_name == "Integrated Search":
                             new_hwnd, searchedroom_name = self.unique_code_confirm(code, hwndMain)
                             if searchedroom_name == chatroom_name:
-                                self.log_case(chatroom_name, actual_title, text, code, searchedroom_name, "message_sent_desired_chatroom", "")
+                                self.log_case(chatroom_name, actual_title, text, code, searchedroom_name, "message_sent_desired_chatroom")
                         else:
-                            self.log_case(chatroom_name, actual_title, text, code, searchedroom_name, "message_sent_wrong_chatroom", "")
+                            self.log_case(chatroom_name, actual_title, text, code, searchedroom_name, "message_sent_wrong_chatroom")
 
                 except Exception as e:
-                    self.log_case(chatroom_name, actual_title, text, code, searchedroom_name, "N/A", e)
+                    self.log_result(chatroom_name, actual_title, text, "", "", "FAIL", f"{str(e)}: Message Not Sent")
 
                 hwndMain = new_hwnd
                 win32gui.PostMessage(hwndMain, win32con.WM_CLOSE, 0, 0)
@@ -69,7 +70,7 @@ class KakaoChatService:
                     win32gui.PostMessage(integrated_hwnd, win32con.WM_CLOSE, 0, 0)
 
         else:
-            self.log_case(chatroom_name, "", text, "", "", "chatroom_not_found", "")
+            self.log_case(chatroom_name, actual_title, text, code, searchedroom_name, "chatroom_not_found")
 
     # Enter for open_chatroom
     def SendReturn(sefl, hwnd):
@@ -99,7 +100,6 @@ class KakaoChatService:
 
         return hwndMain
     
-    # Search for unique code
     def unique_code_confirm(self, code, hwndMain):
         pyautogui.keyDown('ctrl')
         pyautogui.press('f')
@@ -122,34 +122,25 @@ class KakaoChatService:
 
         return new_hwnd, searchedroom_name
     
-    def log_case(self, chatroom_desired, chatroom_opened, message_input, unique_code_search, chatroom_found, case, e):
+    def log_case(self, chatroom_desired, chatroom_opened, message_input, unique_code_search, chatroom_found, case):
         match case:
             case "opened_wrong_chatroom":
                 self.log_result(chatroom_desired, chatroom_opened, message_input, "", "FAIL", "Opend Wrong Chatroom: Message Not Sent")
                 print (False, chatroom_desired, message_input)
-                self.last_log_case_result = (False, chatroom_desired, message_input)
                 return (False, chatroom_desired, message_input)
             case "chatroom_not_found":
                 self.log_result(chatroom_desired, "", message_input, "", "FAIL", "Chatroom Not Found: Message Not Sent")
                 print (False, chatroom_desired, message_input)
-                self.last_log_case_result = (False, chatroom_desired, message_input)
                 return (False, chatroom_desired, message_input)
             case "message_sent_desired_chatroom":
                 self.log_result(chatroom_desired, chatroom_opened, message_input, unique_code_search, chatroom_found, "SUCCESS")
                 print (True, chatroom_desired, message_input)
-                self.last_log_case_result = (True, chatroom_desired, message_input)
                 return (True, chatroom_desired, message_input)
             case "message_sent_wrong_chatroom":
                 self.log_result(chatroom_desired, chatroom_opened, message_input, unique_code_search, chatroom_found, "FAIL", "Message Sent to Wrong Chatroom")
                 print (False, chatroom_desired, message_input)
-                self.last_log_case_result = (False, chatroom_desired, message_input)
                 return (False, chatroom_desired, message_input)
-            case "N/A":
-                self.log_result(chatroom_desired, chatroom_opened, message_input, "", "", "FAIL", f"{str(e)}: Message Not Sent")
-                print (False, chatroom_desired, message_input)
-                self.last_log_case_result = (False, chatroom_desired, message_input)
-                return (False, chatroom_desired, message_input)
-            
+
     def log_result(self, chatroom_desired, chatroom_opened, message_input, unique_code_search, chatroom_found, status, reason_fail = ""):
         now = datetime.now()
 
@@ -158,7 +149,7 @@ class KakaoChatService:
         day = self.start_time.strftime('%d')
         hour = self.start_time.strftime('%H')
 
-        base_dir = r"C:\Users\CMIA41AS0001\LGVISION\Log"
+        base_dir = r"C:\Users\webal\OneDrive\Documents\0.LG_Project\Log"
         folder_path = os.path.join(base_dir, year, month, day, hour)
         os.makedirs(folder_path, exist_ok=True)
 
@@ -221,9 +212,17 @@ def main():
     bot = KakaoBot(config, service)
     
     reciever = "김지희 (Jihee Kim)"
-    text = "HELLO"
+    text = "21세기의 문턱을 넘어서면서 인류는 전례 없는 속도로 진화하는 과학기술의 흐름 속에 놓이게 되었고, 특히 인공지능, 빅데이터, 사물인터넷, 양자 컴퓨팅 등 첨단 정보기술의 급속한 발전은 산업 구조뿐만 아니라 인간의 사고방식, 교육 방식, 심지어는 일상생활의 사소한 부분에까지 광범위하고도 심층적인 변화를 일으키고 있으며, 이로 인해 우리는 전통적인 가치관과 패러다임에 대한 재고가 불가피한 상황에 직면하고 있습니다. 예를 들어, 과거에는 사람 간의 대면 소통이 인간 관계의 중심이었으나, 현재는 메신저 앱과 SNS가 소통의 중심축을 이루며, 디지털 정체성과 현실 정체성의 경계가 점점 모호해지는 상황 속에서 개인은 끊임없는 정보의 홍수와 주체적 사고 사이에서 균형을 잡아야만 하며, 이는 디지털 시대를 살아가는 모든 이들이 직면한 보편적인 과제가 되었습니다. 또한 기계가 인간의 판단을 대체하고, 알고리즘이 삶의 선택을 예측하는 시대에 인간의 역할은 점점 축소되는 것이 아닌가 하는 철학적 우려 또한 제기되고 있으며, 이러한 고민은 단순히 기술의 효율성이나 생산성에 국한된 문제가 아니라 인류의 존엄성, 자유의지, 그리고 공동체적 윤리와 직결된 중대한 문제이기 때문에, 우리는 기술의 진보를 무조건적으로 환영하거나 거부하기보다는 그것이 궁극적으로 인간의 삶을 어떻게 변화시키고, 그 변화가 과연 바람직한 방향인지를 진지하게 고찰하고 사회적 합의를 도출해나가는 과정이 절실히 요구됩니다. 나아가, 이러한 변화의 중심에서 교육은 단순한 지식 전달이 아닌 비판적 사고와 창의력, 그리고 윤리적 감수성을 길러주는 방향으로 재편되어야 하며, 정책 입안자들은 기술의 발전이 가져오는 사회적 양극화, 정보 격차, 프라이버시 침해 문제에 적극 대응할 수 있는 제도적 장치를 마련함으로써 모두가 디지털 혁신의 수혜자가 될 수 있도록 포용적인 시스템을 구축해야 할 것입니다."
     bot.update_message(reciever, text)
+    kakao_opentalk_names = ["김지희 (Jihee Kim)", "NND alert test 1", "NND alert test 2", "NND alert test 3", "test 4", "test 5", "test 6", "test 7", "test 8", "test 9", "test 10"]
 
+    message = "MI2 NND(A) #02 INTEGRATION LOT_ID: 8EGB35NA02 has NG Rate of 7.33% at 2025-07-11 08:01:21. Total defect count is 47. Surface defect count: 36, Dimension defect count: 15. Please Check!!"
+
+    # for i in range(100):
+    #     selected_room = random.choice(kakao_opentalk_names)
+    #     print(f"[{i+1}/100] Sending to: {selected_room}")
+    #     bot.send_one(selected_room, message)
+    #     time.sleep(0.5)
 
     bot.send_all()
 

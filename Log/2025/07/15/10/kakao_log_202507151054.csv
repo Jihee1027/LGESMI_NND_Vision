@@ -1,0 +1,2 @@
+﻿Time,Chatroom (Input),Chatroom (Output),Message (Input),Message (Output),Status,Reason for FAIL
+2025-07-15 10:54:46,김지희 (Jihee Kim),김지희 (Jihee Kim),"Hello, test message",,FAIL,module 'pywinauto.clipboard' has no attribute 'SetData'

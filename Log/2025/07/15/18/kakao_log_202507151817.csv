@@ -1,0 +1,3 @@
+﻿Time,Chatroom(Desired),Chatroom(Opened),Message Input,Unique Code(Searched),Chatroom(Found),Status,Reason(FAIL)
+2025-07-15 18:17:43,김지희 (Jihee Kim),김지희 (Jihee Kim),"Hello, test message",1f916f9a,Integrated Search,FAIL,Message Sent to Wrong Chatroom
+2025-07-15 18:17:52,김지희 (Jihee Kim),김지희 (Jihee Kim),"Hello, test message",c569ee90,김지희 (Jihee Kim),SUCCESS,
