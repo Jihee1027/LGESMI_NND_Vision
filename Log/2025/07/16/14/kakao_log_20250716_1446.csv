@@ -1,5 +1,0 @@
-﻿Time,Chatroom(Desired),Chatroom(Opened),Message Input,Unique Code(Searched),Chatroom(Found),Status,Reason(FAIL)
-2025-07-16 14:46:34,김지희 (Jihee Kim),김지희 (Jihee Kim),hello,,,FAIL,'module' object is not callable: Message Not Sent
-2025-07-16 14:46:46,김지희 (Jihee Kim),김지희 (Jihee Kim),hello,ae25ef05,김지희 (Jihee Kim),SUCCESS,
-2025-07-16 14:46:57,김지희 (Jihee Kim),김지희 (Jihee Kim),hello,c0cfd36e,김지희 (Jihee Kim),SUCCESS,
-2025-07-16 14:47:08,김지희 (Jihee Kim),김지희 (Jihee Kim),hello,,,FAIL,'module' object is not callable: Message Not Sent

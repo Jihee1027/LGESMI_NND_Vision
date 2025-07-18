@@ -1,5 +1,0 @@
-﻿Time,Chatroom(Desired),Chatroom(Opened),Message Input,Unique Code(Searched),Chatroom(Found),Status,Reason(FAIL)
-2025-07-16 14:51:06,김지희 (Jihee Kim),김지희 (Jihee Kim),hello,,,FAIL,Error calling OpenClipboard ([WinError 0] The operation completed successfully.): Message Not Sent
-2025-07-16 14:51:36,김지희 (Jihee Kim),김지희 (Jihee Kim),hello,,,FAIL,'module' object is not callable: Message Not Sent
-2025-07-16 14:51:53,김지희 (Jihee Kim),김지희 (Jihee Kim),hello,7d6db73f,김지희 (Jihee Kim),SUCCESS,
-2025-07-16 14:52:06,김지희 (Jihee Kim),김지희 (Jihee Kim),hello,53222f00,김지희 (Jihee Kim),SUCCESS,

@@ -1,2 +1,0 @@
-﻿Time,Chatroom(Desired),Chatroom(Opened),Message Input,Unique Code(Searched),Chatroom(Found),Status,Reason(FAIL)
-2025-07-15 18:12:21,김지희 (Jihee Kim),김지희 (Jihee Kim),"Hello, test message",,,FAIL,The object is not a PyHANDLE object: Message Not Sent

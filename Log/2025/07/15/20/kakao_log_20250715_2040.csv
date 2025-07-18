@@ -1,3 +1,0 @@
-﻿Time,Chatroom(Desired),Chatroom(Opened),Message Input,Unique Code(Searched),Chatroom(Found),Status,Reason(FAIL)
-2025-07-15 20:40:47,test 9,test 9,"MI2 NND(C) #05 INTEGRATION LOT_ID: d74ac79c81 has NG Rate of 14.48% at 2025-07-15 20:40:40. Total defect count is 116. Surface defect count: 45, Dimension defect count: 71. Please Check!!",c64bea09,Integrated Search,FAIL,Message Sent to Wrong Chatroom
-2025-07-15 20:40:56,test 6,test 6,"MI2 NND(C) #04 FOIL LOT_ID: b40bd02964 has NG Rate of 13.10% at 2025-07-15 20:40:48. Total defect count is 131. Surface defect count: 99, Dimension defect count: 32. Please Check!!",38412166,test 6,SUCCESS,

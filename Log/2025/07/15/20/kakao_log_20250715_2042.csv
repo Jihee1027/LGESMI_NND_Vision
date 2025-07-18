@@ -1,4 +1,0 @@
-﻿Time,Chatroom(Desired),Chatroom(Opened),Message Input,Unique Code(Searched),Chatroom(Found),Status,Reason(FAIL)
-2025-07-15 20:42:45,test 8,test 8,"MI2 NND(A) #04 FOIL LOT_ID: 61f6949418 has NG Rate of 2.58% at 2025-07-15 20:42:37. Total defect count is 181. Surface defect count: 97, Dimension defect count: 84. Please Check!!",8ba55b0a,Integrated Search,FAIL,Message Sent to Wrong Chatroom
-2025-07-15 20:42:54,test 5,test 5,"MI2 NND(C) #02 FOIL LOT_ID: 2b4a8ce2f1 has NG Rate of 13.20% at 2025-07-15 20:42:46. Total defect count is 118. Surface defect count: 92, Dimension defect count: 26. Please Check!!",ba8cbd16,test 5,SUCCESS,
-2025-07-15 20:43:03,test 7,test 7,"MI2 NND(C) #02 INTEGRATION LOT_ID: 41a2c2eb1b has NG Rate of 17.78% at 2025-07-15 20:42:56. Total defect count is 49. Surface defect count: 29, Dimension defect count: 20. Please Check!!",9b0eeeb4,AutoBotTest.py - 0.LG_Project - Visual Studio Code,FAIL,Message Sent to Wrong Chatroom

@@ -1,2 +1,0 @@
-﻿Time,Chatroom(Desired),Chatroom(Opened),Message Input,Unique Code(Searched),Chatroom(Found),Status,Reason(FAIL)
-2025-07-16 15:50:44,test 9,test 9,"MI2 NND(C) #02 FOIL LOT_ID: 7a52d4aa50 has NG Rate of 9.28% at 2025-07-16 15:50:36. Total defect count is 110. Surface defect count: 83, Dimension defect count: 27. Please Check!!",295fc690,AutoBotTest.py - 0.LG_Project - Visual Studio Code,FAIL,Message Sent to Wrong Chatroom

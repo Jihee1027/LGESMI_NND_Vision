@@ -1,2 +1,0 @@
-﻿Time,Chatroom(Desired),Chatroom(Opened),Message Input,Unique Code(Searched),Chatroom(Found),Status,Reason(FAIL)
-2025-07-15 18:25:45,김지희 (Jihee Kim),김지희 (Jihee Kim),"MI2 NND(A) #02 INTEGRATION LOT_ID: 8EGB35NA02 has NG Rate of 7.33% at 2025-07-11 08:01:21. Total defect count is 47. Surface defect count: 36, Dimension defect count: 15. Please Check!!",17723a64,● message.py - 0.LG_Project - Visual Studio Code,FAIL,Message Sent to Wrong Chatroom

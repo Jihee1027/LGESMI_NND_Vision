@@ -1,2 +1,0 @@
-﻿Time,Chatroom(Desired),Chatroom(Opened),Message Input,Unique Code(Searched),Chatroom(Found),Status,Reason(FAIL)
-2025-07-16 15:47:15,test 9,test 9,"MI2 NND(C) #06 INTEGRATION LOT_ID: 031359cbf5 has NG Rate of 11.38% at 2025-07-16 15:47:06. Total defect count is 100. Surface defect count: 24, Dimension defect count: 76. Please Check!!",f363f34a,● message.py - 0.LG_Project - Visual Studio Code,FAIL,Message Sent to Wrong Chatroom
