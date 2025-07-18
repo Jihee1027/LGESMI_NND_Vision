@@ -1,6 +1,4 @@
 from message import KakaoChatConfig, KakaoChatService, KakaoBot
-import random
-import uuid
 from datetime import datetime
 import time
 from Email import EmailSummaryExtractor
@@ -13,7 +11,7 @@ config = KakaoChatConfig()
 service = KakaoChatService()
 bot = KakaoBot(config, service)
 
-chatrooms = "LGESMI NND MESSAGE"
+chatrooms = "김지희 (Jihee Kim)"
 # chatrooms = "test 7"
 
 prev_summary = None
@@ -22,7 +20,7 @@ class SimpleLogger:
     def __init__(self):
         self.start_time = datetime.now()
         self.start_time_str = self.start_time.strftime('%Y%m%d_%H%M%S')
-        self.base_dir = r"C:\Users\CMIA41AS0001\LGVISION\Log_continue"
+        self.base_dir = r"C:\Users\webal\OneDrive\Documents\0.LG_Project\Log_Continue"
 
     def log_result(self, summary, status, x):
         now = datetime.now()
@@ -54,6 +52,58 @@ class SimpleLogger:
 logger = SimpleLogger()
 
 
+def Comp_Time(time1, time2):
+    if abs(time1 - time2) > 35:
+        return 0
+    else:
+        return 1
+    
+
+def send_chat(prev_summary, summary, chatrooms):
+
+    try:
+        if summary != prev_summary:
+            prev_summary = summary
+            result = bot.send_one(chatrooms, summary)
+            print("\n" + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ": kakaotalk successfully sent\n")
+            logger.log_result(summary_log, "Message Sent", 1)
+
+            while bot.service.last_log_case_result[0] == False:
+                print("[!] Retry: Failed to send, trying again...")
+                time.sleep(2)  # optional: avoid spamming server
+                result = bot.send_one(chatrooms, summary)
+        else:
+            print(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ": Didn't send kakaotalk because content was same")
+            logger.log_result(summary_log, "No Change", 0)
+
+    except Exception as e:
+        print(f"[ERROR] {e}")
+        logger.log_result(summary_log if 'summary' in locals() else "N/A", f"[ERROR] {e}", -1)
+
+        # Retry loop
+        attempt = 1
+        while True:
+            try:
+                print(f"[Retry Attempt #{attempt}] Retrying send after error...")
+                result = bot.send_one(chatrooms, summary)
+                if bot.service.last_log_case_result[0]:
+                    print(f"[{datetime.now()}] Retry succeeded.")
+                    logger.log_result(summary_log, "Message Sent After Exception", 2)
+                    break
+                else:
+                    print(f"[{datetime.now()}] Retry failed. Will try again...\n")
+            except Exception as send_exception:
+                print(f"[Retry Error] Another exception occurred: {send_exception}")
+                logger.log_result(summary_log, f"Retry Error: {send_exception}", -2)
+
+            print(bot.service.last_log_case_result[0])
+            attempt += 1
+            time.sleep(2)
+    return prev_summary
+
+prev_text1 = None
+prev_text2 = None
+
 try:
     while True:
         try:
@@ -65,46 +115,22 @@ try:
             )
             content, summary_log = extractor.get_latest_email()
             summary = extractor.extract_summary(content)
-            
+            split_parts = extractor.split_summary(summary)
+            chat1 = "김지희 (Jihee Kim)"
+            chat2 = "LGESMI NND Alert"
 
-            if summary != prev_summary:
-                prev_summary = summary
-                result = bot.send_one(chatrooms, summary)
-                print("\n" + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ": kakaotalk successfully sent\n")
-                logger.log_result(summary_log, "Message Sent", 1)
-
-                while bot.service.last_log_case_result[0] == False:
-                    print("[!] Retry: Failed to send, trying again...")
-                    time.sleep(2)  # optional: avoid spamming server
-                    result = bot.send_one(chatrooms, summary)
+            if len(split_parts) == 2:
+                text1, text2 = split_parts
             else:
-                print(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ": Didn't send kakaotalk because content was same")
-                logger.log_result(summary_log, "No Change", 0)
+                text1 = split_parts[0]
+                text2 = "[No Anode Section Found]"
 
-        except Exception as e:
-            print(f"[ERROR] {e}")
-            logger.log_result(summary_log if 'summary' in locals() else "N/A", f"[ERROR] {e}", -1)
-
-            # Retry loop
-            attempt = 1
-            while True:
-                try:
-                    print(f"[Retry Attempt #{attempt}] Retrying send after error...")
-                    result = bot.send_one(chatrooms, summary)
-                    if bot.service.last_log_case_result[0]:
-                        print(f"[{datetime.now()}] Retry succeeded.")
-                        logger.log_result(summary_log, "Message Sent After Exception", 2)
-                        break
-                    else:
-                        print(f"[{datetime.now()}] Retry failed. Will try again...\n")
-                except Exception as send_exception:
-                    print(f"[Retry Error] Another exception occurred: {send_exception}")
-                    logger.log_result(summary_log, f"Retry Error: {send_exception}", -2)
-
-                print(bot.service.last_log_case_result[0])
-                attempt += 1
-                time.sleep(2)
-
+            prev_text1 = send_chat(prev_text1, text1, chat1)
+            prev_text2 = send_chat(prev_text2, text2, chat1)
+            # print(text1)
+            # print("Test")
+            # print(text2)
+            
         finally:
             time.sleep(30)
 

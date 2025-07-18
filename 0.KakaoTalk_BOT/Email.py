@@ -32,6 +32,19 @@ class EmailSummaryExtractor:
                 filtered_lines.append(line)
             return "\n".join(filtered_lines).strip()
         return "*Summary section not found*"
+    
+    def split_summary(self, text: str):
+        # Split the text at the word "Anode" and preserve the keyword
+        parts = text.split("Anode", 1)
+
+        if len(parts) < 2:
+            return [text.strip()]  # Only one section (Cathode or other)
+
+        cathode_part = parts[0].strip()
+        anode_part = "Anode" + parts[1]  # Add back the keyword to Anode section
+
+        return [cathode_part, anode_part]
+
 
 if __name__ == "__main__":
       # Replace with your actual password securely

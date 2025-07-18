@@ -7,7 +7,6 @@ import pyperclip
 import csv
 import os
 from datetime import datetime
-import uuid
 
 class KakaoChatConfig:
     def __init__(self):
@@ -35,7 +34,8 @@ class KakaoChatService:
                 try:
                     # Send the message
                     code = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                    pyperclip.copy(f"{code}" + "\n\n" + text)
+                    logo = "*****LGESMI NND Alert*****\n"
+                    pyperclip.copy(f"{code}" + "\n\n" + logo+ text)
                     pyautogui.hotkey('ctrl', 'v')
                     time.sleep(0.5)
                     
@@ -158,7 +158,7 @@ class KakaoChatService:
         day = self.start_time.strftime('%d')
         hour = self.start_time.strftime('%H')
 
-        base_dir = r"C:\Users\CMIA41AS0001\LGVISION\Log"
+        base_dir = r"C:\Users\webal\OneDrive\Documents\0.LG_Project\Log"
         folder_path = os.path.join(base_dir, year, month, day, hour)
         os.makedirs(folder_path, exist_ok=True)
 
