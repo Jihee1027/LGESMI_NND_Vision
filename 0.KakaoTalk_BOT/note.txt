@@ -11,3 +11,44 @@
 #         pyautogui.press('enter')
         
 #         win32gui.PostMessage(hwndMain, win32con.WM_CLOSE, 0, 0) # close
+
+
+
+
+            if summary != prev_summary:
+                prev_summary = summary
+                result = bot.send_one(chatrooms, summary)
+                print("\n" + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ": kakaotalk successfully sent\n")
+                logger.log_result(summary_log, "Message Sent", 1)
+
+                while bot.service.last_log_case_result[0] == False:
+                    print("[!] Retry: Failed to send, trying again...")
+                    time.sleep(2)  # optional: avoid spamming server
+                    result = bot.send_one(chatrooms, summary)
+            else:
+                print(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ": Didn't send kakaotalk because content was same")
+                logger.log_result(summary_log, "No Change", 0)
+
+        except Exception as e:
+            print(f"[ERROR] {e}")
+            logger.log_result(summary_log if 'summary' in locals() else "N/A", f"[ERROR] {e}", -1)
+
+            # Retry loop
+            attempt = 1
+            while True:
+                try:
+                    print(f"[Retry Attempt #{attempt}] Retrying send after error...")
+                    result = bot.send_one(chatrooms, summary)
+                    if bot.service.last_log_case_result[0]:
+                        print(f"[{datetime.now()}] Retry succeeded.")
+                        logger.log_result(summary_log, "Message Sent After Exception", 2)
+                        break
+                    else:
+                        print(f"[{datetime.now()}] Retry failed. Will try again...\n")
+                except Exception as send_exception:
+                    print(f"[Retry Error] Another exception occurred: {send_exception}")
+                    logger.log_result(summary_log, f"Retry Error: {send_exception}", -2)
+
+                print(bot.service.last_log_case_result[0])
+                attempt += 1
+                time.sleep(2)
