@@ -7,6 +7,7 @@ import pyperclip
 import csv
 import os
 from datetime import datetime
+from Log_Email import send_email_fail, send_email_success
 
 class KakaoChatConfig:
     def __init__(self):
@@ -23,6 +24,7 @@ class KakaoChatService:
         if hwndMain != 0:
             win32gui.SetForegroundWindow(hwndMain)
             time.sleep(0.1)
+
 
             actual_title = win32gui.GetWindowText(hwndMain)
 
@@ -48,7 +50,6 @@ class KakaoChatService:
                     # Check if the message actually sent
                     if searchedroom_name == chatroom_name:
                         self.log_case(chatroom_name, actual_title, text, code, searchedroom_name, "message_sent_desired_chatroom", "")
-                        
                     else:
                         if searchedroom_name == "Integrated Search":
                             new_hwnd, searchedroom_name = self.unique_code_confirm(code, hwndMain)
@@ -128,26 +129,31 @@ class KakaoChatService:
                 self.log_result(chatroom_desired, chatroom_opened, message_input, "", "FAIL", "Opend Wrong Chatroom: Message Not Sent")
                 print (False, chatroom_desired, message_input)
                 self.last_log_case_result = (False, chatroom_desired, message_input)
+                send_email_fail(chatroom_found)
                 return (False, chatroom_desired, message_input)
             case "chatroom_not_found":
                 self.log_result(chatroom_desired, "", message_input, "", "FAIL", "Chatroom Not Found: Message Not Sent")
                 print (False, chatroom_desired, message_input)
                 self.last_log_case_result = (False, chatroom_desired, message_input)
+                send_email_fail(chatroom_found)
                 return (False, chatroom_desired, message_input)
             case "message_sent_desired_chatroom":
                 self.log_result(chatroom_desired, chatroom_opened, message_input, unique_code_search, chatroom_found, "SUCCESS")
                 print (True, chatroom_desired, message_input)
                 self.last_log_case_result = (True, chatroom_desired, message_input)
+                send_email_success(chatroom_found)
                 return (True, chatroom_desired, message_input)
             case "message_sent_wrong_chatroom":
                 self.log_result(chatroom_desired, chatroom_opened, message_input, unique_code_search, chatroom_found, "FAIL", "Message Sent to Wrong Chatroom")
                 print (False, chatroom_desired, message_input)
                 self.last_log_case_result = (False, chatroom_desired, message_input)
+                send_email_fail(chatroom_found)
                 return (False, chatroom_desired, message_input)
             case "N/A":
                 self.log_result(chatroom_desired, chatroom_opened, message_input, "", "", "FAIL", f"{str(e)}: Message Not Sent")
                 print (False, chatroom_desired, message_input)
                 self.last_log_case_result = (False, chatroom_desired, message_input)
+                send_email_fail(chatroom_found)
                 return (False, chatroom_desired, message_input)
             
     def log_result(self, chatroom_desired, chatroom_opened, message_input, unique_code_search, chatroom_found, status, reason_fail = ""):
@@ -158,7 +164,7 @@ class KakaoChatService:
         day = self.start_time.strftime('%d')
         hour = self.start_time.strftime('%H')
 
-        base_dir = r"C:\Users\webal\OneDrive\Documents\0.LG_Project\Log"
+        base_dir = r"C:\CMIA41AS0001\LGVISION\Log"
         folder_path = os.path.join(base_dir, year, month, day, hour)
         os.makedirs(folder_path, exist_ok=True)
 

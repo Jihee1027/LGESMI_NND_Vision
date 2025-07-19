@@ -5,6 +5,7 @@ from Email import EmailSummaryExtractor
 import os
 import csv
 from datetime import datetime
+from Log_Email import send_email_error
 
 # Set up
 config = KakaoChatConfig()
@@ -20,6 +21,7 @@ class SimpleLogger:
     def __init__(self):
         self.start_time = datetime.now()
         self.start_time_str = self.start_time.strftime('%Y%m%d_%H%M%S')
+        #self.base_dir = r"C:\Users\webal\OneDrive\Documents\0.LG_Project\Log_Continue"
         self.base_dir = r"C:\CMIA41AS0001\LGVISION\Log_continue"
 
     def log_result(self, summary, status, x):
@@ -79,10 +81,11 @@ def send_chat(prev_summary, summary, chatrooms):
     except Exception as e:
         print(f"[ERROR] {e}")
         logger.log_result(summary_log if 'summary' in locals() else "N/A", f"[ERROR] {e}", -1)
+        send_email_error(chatrooms)
 
         # Retry loop
         attempt = 1
-        while True:
+        while True:  
             try:
                 print(f"[Retry Attempt #{attempt}] Retrying send after error...")
                 result = bot.send_one(chatrooms, summary)
@@ -122,6 +125,10 @@ try:
             chat1 = "Cathode/NND/ESMI2"
             chat2 = "Anode/NND/ESMI2"
 
+            # chat3 = "김지희 (Jihee Kim)"
+            # chat1 = "김지희 (Jihee Kim)"
+            # chat2 = "김지희 (Jihee Kim)"
+
             if len(split_parts) == 2:
                 text1, text2 = split_parts
             else:
@@ -140,3 +147,6 @@ try:
 
 except KeyboardInterrupt:
     print("\n[!] Program stopped by user.")
+ 
+
+ 
