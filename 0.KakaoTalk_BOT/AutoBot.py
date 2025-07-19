@@ -20,7 +20,7 @@ class SimpleLogger:
     def __init__(self):
         self.start_time = datetime.now()
         self.start_time_str = self.start_time.strftime('%Y%m%d_%H%M%S')
-        self.base_dir = r"C:\Users\webal\OneDrive\Documents\0.LG_Project\Log_Continue"
+        self.base_dir = r"C:\CMIA41AS0001\LGVISION\Log_continue"
 
     def log_result(self, summary, status, x):
         now = datetime.now()
@@ -103,6 +103,7 @@ def send_chat(prev_summary, summary, chatrooms):
 
 prev_text1 = None
 prev_text2 = None
+prev_text3 = None
 
 try:
     while True:
@@ -116,8 +117,10 @@ try:
             content, summary_log = extractor.get_latest_email()
             summary = extractor.extract_summary(content)
             split_parts = extractor.split_summary(summary)
-            chat1 = "김지희 (Jihee Kim)"
-            chat2 = "LGESMI NND Alert"
+
+            chat3 = "LGESMI NND MESSAGE"
+            chat1 = "Cathode/NND/ESMI2"
+            chat2 = "Anode/NND/ESMI2"
 
             if len(split_parts) == 2:
                 text1, text2 = split_parts
@@ -125,8 +128,9 @@ try:
                 text1 = split_parts[0]
                 text2 = "[No Anode Section Found]"
 
+            prev_text3 = send_chat(prev_text3, summary, chat3)
             prev_text1 = send_chat(prev_text1, text1, chat1)
-            prev_text2 = send_chat(prev_text2, text2, chat1)
+            prev_text2 = send_chat(prev_text2, text2, chat2)
             # print(text1)
             # print("Test")
             # print(text2)
